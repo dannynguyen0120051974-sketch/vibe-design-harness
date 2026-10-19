@@ -1,146 +1,99 @@
 ---
 name: vibe-harness-design
-description: "Universal AI Agent UI/UX Design System Engine & Anti-Slop Harness for Frontend, Landing Pages, and Web Apps."
-version: 1.5.1
+description: "Use when designing UI/UX, frontend, landing pages, or web apps. Enforces Image-First reference, 14 themes, 30-gate anti-slop linter, and 12 Impeccable post-processing commands."
+version: 1.6.0
 ---
 
-# Vibe-Harness-Design v1.5.1 — Universal UI/UX & Anti-Slop Engine
+# Vibe-Harness-Design v1.6.0 — Universal UI/UX & Anti-Slop Engine
 
-> **Powered by:** ABS Design System · Hallmark 57 Gates · UX/UI Triad · Image-First Pipeline · 5-Dim Audit Standard  
-> **Mục tiêu:** Mọi AI model tầm trung tạo UI đẹp ngang Claude + Codex. Triệt tiêu 100% mùi AI-slop.
+> **Powered by:** ABS Design System · Hallmark 57 Gates · Impeccable v0.1.15 Craft Floor · Taste Skill Image-First Pipeline  
+> **Repo:** `/root/vibe-design-harness` (`https://github.com/teddiesloco/vibe-design-harness`)  
+> **Mục tiêu:** Mọi AI model tạo UI đẹp, sang, chuẩn Studio ngang Designer cao cấp — triệt tiêu 100% mùi AI-slop cả lúc dựng mới (Day 0) lẫn lúc tinh chỉnh hậu kỳ (Post-processing).
 
 ---
 
 ## ⚡ Khi Nào Kích Hoạt
 
-Tự động khi người dùng yêu cầu:
+Tự động kích hoạt khi người dùng yêu cầu:
 - "làm UI", "thiết kế web", "tạo landing page", "code frontend", "giao diện web"
 - "làm component", "sửa giao diện", "làm form", "thiết kế dashboard"
-- "tạo ảnh tham chiếu", "image reference", "Tailwind UI", "v0 design"
+- "polish", "distill", "critique", "audit UI", "làm sang lên", "bớt mùi AI"
 
 ---
 
-## 🏛️ Pipeline 4 Bước (Image-First + Lint Guard)
+## 🏛️ Pipeline 5 Bước Toàn Diện (Image-First + Craft Floor + 30-Gate Linter)
 
 ```
-[BƯỚC 0: IMAGE REFERENCE]  ──▶ [BƯỚC 1: TOKENS]  ──▶ [BƯỚC 2: CODE]  ──▶ [BƯỚC 3: LINT]
-  Sinh ảnh tham chiếu              Pre-inject 4         Antigravity        Auto double-check,
-  từng section riêng               token cứng           code HTML/         tự vá, rồi giao
-  (Taste: 1 ảnh/section)                                Tailwind/React
+[BƯỚC 0: IMAGE-FIRST] ──▶ [BƯỚC 1: CONTEXT] ──▶ [BƯỚC 2: CODE] ──▶ [BƯỚC 3: 30-GATE LINT] ──▶ [BƯỚC 4: POST-POLISH]
+ Sinh ảnh tham chiếu       Sinh PRODUCT.md       Dựng HTML/React     Quét 30 lỗi AI-slop       Chạy 1 trong 12 lệnh
+ 16:9 từng section         + DESIGN.md (14       theo Craft Floor    (<1ms) + --fix tự vá      hậu kỳ (polish, distill,
+ (nếu làm trang mới)       themes chuẩn)         (không nest card)                             quieter, bolder, harden)
 ```
 
-**Bước 0 — Khi nào bắt buộc sinh ảnh trước?**
-- Task là landing page / marketing site / product page mới hoàn toàn → **bắt buộc**.
-- Task chỉ là sửa component nhỏ / form / dashboard → skip Bước 0, đi thẳng Bước 1.
+---
+
+## 🎨 Bước 0: Image-First Reference (Khi dựng trang mới từ số 0)
+
+- Sinh **1 ảnh riêng biệt (16:9) cho TỪNG section** trước khi code (`node /root/vibe-design-harness/bin/cli.js expand "<concept>" <domain>`).
+- **CẤM dùng bố cục Hero mặc định `left-text / right-image` nhàm chán của AI.** Ưu tiên: `centered architectural focus`, `full-bleed editorial`, `asymmetric Bento`, hoặc `Quiet Luxury Apple style`.
+- Chọn rõ **Visitor Mode** trước khi đặt bút:
+  - **Persuade** (Landing page, Sales page): Конtrast mạnh, nhịp điệu dẫn dắt hành động.
+  - **Operate** (Dashboard, App, Admin, Portal): Ổn định, mật độ thông tin rõ, `tabular-nums`.
+  - **Read** (Docs, Editorial, Blog): Độ dài dòng `45–75ch`, chữ tối thiểu `16px`.
+  - **Experience** (Showcase, Flagship): Chuyển động 60fps tinh tế.
 
 ---
 
-## 🎨 Bước 0: Image-First Reference (Học từ Taste Skill)
+## 🎯 Bước 1: Khởi Tạo Cặp Context `PRODUCT.md` + `DESIGN.md` & 4 Token Cứng
 
-> "Thay vì để AI tự tưởng tượng, hãy cho nó học từ hình ảnh đẹp trước." — Taste Skill
+Chạy lệnh tạo cặp hồ sơ thiết kế chuẩn Impeccable:
+```bash
+node /root/vibe-design-harness/bin/cli.js init-context apple_luxury --name "ProjectName"
+```
+*(14 themes có sẵn: `linear`, `vercel`, `stripe`, `airbnb`, `saas_modern`, `apple_luxury`, `modern_clean`, `luxury_gold`, `luxury_editorial`, `minimalism`, `nordic_clean`, `zen_japanese`, `neo_brutalism`, `glassmorphism_dark`)*
 
-**Quy tắc bắt buộc:**
-- Sinh **1 ảnh riêng biệt (horizontal 16:9) cho TỪNG section** — không nhét nhiều section vào 1 frame.
-- `landing page` không có số section → mặc định **6 section = 6 ảnh** (Hero · Proof · Pain/Solution · Bento · Pricing · CTA).
-- `full website` → 8 ảnh. `product page` → 6 ảnh.
-- Dùng `abs-image-prompt-engine` để mở rộng prompt ảnh.
-
-**Bố cục Hero — Chống AI Default:**
-- **CẤM dùng left-text / right-image theo mặc định** (đây là pattern AI nhàm nhất).
-- Ưu tiên: `centered over full-bleed image` · `bottom-left text over background` · `stacked center` · `off-grid editorial offset`.
-- Chỉ dùng left-text/right-image khi đó thực sự là lựa chọn tốt nhất.
-
-**4 Chế độ thiết kế (chọn 1 trước khi code):**
-| Mode | Khi nào | Ưu tiên |
-|------|---------|---------|
-| **Persuade** | Landing page, marketing, pricing | Kiếm sự chú ý và hành động |
-| **Operate** | App UI, dashboard, form, admin | Scanability, consistency |
-| **Read** | Docs, blog, hướng dẫn | Cấu trúc rõ, đọc dễ chịu |
-| **Experience** | Portfolio, showcase | Artifact dẫn đầu |
+**4 Luật Cứng (Craft Floor):**
+1. **Surface & Color:** Nền sâu (`bg-zinc-950`, `#08090a`) hoặc Sáng Tinh Khiết (`#fbfbfd`, `#ffffff` chuẩn Quiet Luxury). **CẤM:** `bg-gray-800`, gradient tím-xanh (`from-purple-* to-blue-*`), hồng-cam (`from-pink-* to-orange-*`), hoặc quầng sáng `radial-gradient` loè loẹt sau lưng chữ (`radial-spotlight-glow`).
+2. **Typography & Hierarchy:** Dùng `Plus Jakarta Sans`, `Inter`, `Playfair Display`, `Geist`, `JetBrains Mono`. **CẤM TIỆT:** `Space Grotesk`, `Syne`, `Outfit`, `Sora`, `Chivo`, `Unbounded`, tiêu đề Hero Serif in nghiêng (`italic-serif-display`), nhảy cóc `h1 -> h3` (`skipped-heading`), hoặc `text-justify`.
+3. **Layout & Card:** **CẤM** card lồng trong card, **CẤM** viền dày 1 bên trên card bo góc (`border-accent-on-rounded` / `border-l-4 rounded-xl`), **CẤM** đánh số `01 / 02 / 03` rập khuôn trên mọi card (`numbered-section-labels`), **CẤM** hàng card đeo viền mảnh kèm `shadow-2xl` (`gpt-thin-border-wide-shadow`).
+4. **Motion & Copywriting:** Dùng `cubic-bezier(0.16, 1, 0.3, 1)`. **CẤM:** `animate-bounce`, chấm tròn `animate-pulse` trang trí giả tạo (`pulsing-dot`), văn mẫu AI (`unleash`, `supercharge`, `revolutionize`, `empower`, `"Not a X. A Y."`, `"security theater"`).
 
 ---
 
-## 🎯 Bước 1: 4 Token Cứng Bắt Buộc
+## 🔍 Bước 3: Cổng Chặn Tự Động 30-Gate Linter (`<1ms`)
 
-Trước khi viết bất kỳ dòng code nào:
-
-1. **Background Cực Sâu:** `bg-zinc-950` (`#09090b`) · `bg-slate-950` · `bg-[#08090a]`  
-   **CẤM:** `bg-gray-800`, `bg-gray-900`
-
-2. **Accent High-Contrast:** Emerald `#10b981` · Teal `#14b8a6` · Amber `#f59e0b` · Cyber Blue `#06b6d4`  
-   **CẤM:** gradient tím-hồng (`from-purple-500 to-pink-500`), pink-to-orange creator gradient
-
-3. **Font chuẩn (ABS Standard):**  
-   Heading: `Plus Jakarta Sans` · `Inter Tight` · `Oswald` · `Bricolage Grotesque` (kèm `tracking-tight`)  
-   Body: `Inter` · `Be Vietnam Pro`  
-   **CẤM TIỆT:** `Space Grotesk` · `Syne` · `Outfit` · `Sora` · `Chivo` · `Unbounded` · gradient headline text
-
-4. **Lưới 8pt + Bo góc:** `p-6`/`p-8` · `gap-6` · `rounded-xl` · `border border-white/10`  
-   **CẤM:** pill button `rounded-full px-12+` · `animate-bounce` · `conic-gradient`
-
----
-
-## 🛠️ Bước 2: Dựng Code Chuẩn
-
-Mọi giao diện phải có:
-- `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
-- 100% SVG Icons inline (Lucide SVG) — **CẤM Emoji làm icon**
-- Trạng thái tương tác: `hover:opacity-90 active:scale-[0.98] transition-all`
-- Copy: ngắn, cụ thể, believable — **CẤM:** "unleash", "revolutionize", "next-gen", "seamless platform"
-
-**Gradient được phép (Taste Skill):**  
-✅ `low-chroma palette-matched tonal grade` (ink → graphite, cream → sand)  
-✅ `single-hue atmospheric grade behind photography`  
-❌ rainbow / mesh blob / purple-blue AI default / gradient headline text
-
----
-
-## 🔍 Bước 3: Cổng Chặn Tự Động
-
-Sau khi tạo file xong, **tự động chạy ngay**:
+Sau khi tạo/sửa file HTML hoặc React TSX, **bắt buộc chạy**:
 
 ```bash
-node /root/vibe-design-harness/bin/cli.js lint <file.html>
+node /root/vibe-design-harness/bin/cli.js lint <file.html|file.tsx> --fix
 ```
 
-- **PASSED (Exit 0):** Bàn giao ngay.
-- **FAIL (Exit 2):** Đọc lỗi → tự patch → chạy lại → mới giao.
+- Lọc theo nhóm lỗi nếu cần: `--scope color|layout|type|motion|copy|slop`
+- Bỏ qua có chủ đích trên dòng cụ thể: `<!-- vibe-disable rule-id -->`
+- Nếu có binary Rust của Impeccable trên máy, có thể chạy song kiếm hợp bích:
+  `/root/.hermes/skills/creative/impeccable/scripts/impeccable detect <file_or_url>`
+
+---
+
+## ✨ Bước 4: 12 Lệnh Tinh Chỉnh Hậu Kỳ (Impeccable Post-Processing Flows)
+
+Khi cần nâng cấp hoặc sửa giao diện đang có, gọi playbook chuẩn bằng CLI hoặc MCP `run_design_command`:
 
 ```bash
-# Auto-fix + re-lint
-node /root/vibe-design-harness/bin/cli.js fix <file.html>
-node /root/vibe-design-harness/bin/cli.js lint <file.html>
+node /root/vibe-design-harness/bin/cli.js command <tên_lệnh>
 ```
 
----
-
-## 🔎 Audit Checklist (sau khi build)
-
-Chấm điểm 5 chiều (0-4 mỗi chiều, tổng 20):
-1. **Accessibility** — contrast ≥4.5:1, ARIA, keyboard nav, semantic HTML
-2. **Performance** — không layout thrash, lazy load ảnh, không `will-change` tràn lan
-3. **Theming** — dùng design tokens, dark mode không vỡ
-4. **Responsive** — touch target ≥44px, không overflow ngang, mobile-first
-5. **Implementation Integrity** — không generic, có POV rõ ràng, không product-agnostic
-
-Rating: 18-20 Excellent · 14-17 Good · 10-13 Acceptable · ≤9 cần rebuild.
-
----
-
-## 💻 CLI Commands
-
-```bash
-npx vibe-design-harness scaffold luxury_editorial my_page.html
-npx vibe-design-harness lint component.html
-npx vibe-design-harness fix component.html
-npx vibe-design-harness design-system luxury_gold "#d4af37"
-npx vibe-design-harness expand "Luxury skincare serum bottle on dark granite" luxury_editorial
-```
-
----
-
-## 📚 Khi Cần Đi Sâu Hơn
-
-- Palette / font ngành cụ thể: `skill_view(name="abs-ux-ui-triad")`
-- 21 Hallmark themes, study URL/ảnh: `skill_view(name="hallmark")`
-- 3D WebGL / Canvas effects: `skill_view(name="threeui")`
+| Lệnh | Mục đích sử dụng |
+|---|---|
+| `audit` | Chấm điểm 5 chiều (Accessibility, Performance, Theming, Responsive, Anti-Slop) trên thang 100 |
+| `critique` | Đóng vai Giám đốc Sáng tạo nhận xét trực diện bố cục, điểm nhìn (Squint Test) và mùi AI |
+| `polish` | Chuốt lại lần cuối trước khi ship: căn chỉnh quang học, micro-spacing, hover/focus states |
+| `distill` | Gọt bỏ 30-50% khung viền thừa, badge rườm rà và chữ dài dòng để về đúng tinh thần tối giản |
+| `bolder` | Tăng độ cá tính và tương phản cho giao diện đang bị nhạt/an toàn quá mức |
+| `quieter` | Hạ tông giao diện đang bị loè loẹt/ồn ào về chuẩn **Quiet Luxury** điềm đạm, sang trọng |
+| `delight` | Thêm chi tiết chạm tinh tế (micro-interactions, empty states có hồn) |
+| `harden` | Bọc thép giao diện: chống tràn chữ dài, đa ngôn ngữ, màn hình 320px, mạng chậm, 4 trạng thái async |
+| `animate` | Thiết kế chuyển động GPU (`transform`, `opacity`) mượt mà, có `prefers-reduced-motion` |
+| `clarify` | Chuốt lại toàn bộ UX copywriting, nút CTA và thông báo lỗi cho rõ nghĩa, con người |
+| `adapt` | Tái cấu trúc bố cục thích ứng đa thiết bị (Mobile thumb-zone ≥44px, Desktop wide) |
+| `overdrive` | Đẩy kỹ thuật UI lên mức Flagship (60fps choreography, shaders, fluid transitions) |

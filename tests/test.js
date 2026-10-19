@@ -1,19 +1,36 @@
 import assert from 'assert';
-import { lintUI, fixUI, expandPrompt, generateDesignMD, getTheme, registerTheme, registerDomain, listThemes, listDomains, scaffoldLandingPage } from '../index.js';
+import {
+    lintUI,
+    fixUI,
+    expandPrompt,
+    generateDesignMD,
+    generateProductMD,
+    getTheme,
+    listThemes,
+    listLintRules,
+    listDesignCommands,
+    getDesignCommand,
+    scaffoldLandingPage
+} from '../index.js';
 
-console.log('🧪 Starting VibeDesign-Harness Complete Test Suite...\n');
+console.log('🧪 Starting VibeDesign-Harness v1.6.0 Complete Test Suite...\n');
 
-// Test 1: Design Engine & Built-in Themes
-console.log('Test 1: Verifying 12 Built-in Themes...');
+// Test 1: Design Engine & 14 Built-in Themes
+console.log('Test 1: Verifying 14 Built-in Themes (including Quiet Luxury & Modern Clean)...');
 const themes = listThemes();
-assert(themes.length >= 12, 'Must have at least 12 themes');
+assert(themes.length >= 14, `Must have at least 14 themes, got ${themes.length}`);
 const luxury = getTheme('luxury_editorial');
 assert.strictEqual(luxury.color_mode, 'dark');
 assert(luxury.fonts.headline.includes('Playfair'), 'Luxury theme must have Playfair font');
-console.log('✅ Test 1 Passed: 12 Themes correctly registered.');
+const appleLuxury = getTheme('apple_luxury');
+assert.strictEqual(appleLuxury.color_mode, 'light');
+console.log('✅ Test 1 Passed: 14 Themes correctly registered.');
 
-// Test 2: UI Linter AI-Slop Detection
-console.log('\nTest 2: Verifying Deterministic UI Linter AI-Slop Detection...');
+// Test 2: 30-Gate Deterministic UI Linter AI-Slop Detection
+console.log('\nTest 2: Verifying 30-Gate Deterministic UI Linter AI-Slop Detection...');
+const rules = listLintRules();
+assert(rules.length >= 28, `Must have at least 28 deterministic rules, got ${rules.length}`);
+
 const slopHtml = '<div class="from-purple-600 to-blue-600 bg-gray-800"><button>Click me</button></div>';
 const lintResult = lintUI(slopHtml);
 assert.strictEqual(lintResult.passed, false, 'Slop HTML must fail lint check');
@@ -25,12 +42,26 @@ const hallmarkLint = lintUI(hallmarkSlop);
 assert.strictEqual(hallmarkLint.passed, false, 'Hallmark slop must fail lint check');
 assert(hallmarkLint.violation_count >= 2, 'Must detect Syne font and pill button');
 
-// Test 2c: Impeccable + Taste gates
-const impeccableTasteSlop = '<div class="animate-bounce"><h1 class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-500">Unleash your potential</h1></div>';
+// Test 2c: Impeccable + Taste gates (pulsing dot, side-tab border, aphoristic cadence, italic serif H1)
+const impeccableTasteSlop = `
+<div class="animate-bounce rounded-xl border-l-4">
+  <span class="w-2 h-2 rounded-full animate-pulse"></span>
+  <h1 class="font-serif italic bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-500">Unleash your potential</h1>
+  <p class="text-justify">Not a tool. A platform. Stop security theater.</p>
+</div>`;
 const it2cLint = lintUI(impeccableTasteSlop);
 assert.strictEqual(it2cLint.passed, false, 'Impeccable+Taste slop must fail lint check');
-assert(it2cLint.violation_count >= 3, 'Must detect animate-bounce, gradient text, pink-to-orange, and startup copy');
-console.log('✅ Test 2 Passed: Deterministic UI Linter correctly detected slop (including Hallmark + Impeccable + Taste gates).');
+assert(it2cLint.violation_count >= 7, `Must detect >=7 violations, got ${it2cLint.violation_count}`);
+
+// Test 2d: Scoped detection & inline ignore support
+const copyOnlyLint = lintUI(impeccableTasteSlop, { scope: 'copy' });
+assert.strictEqual(copyOnlyLint.passed, false);
+assert(copyOnlyLint.violation_count >= 2, 'Copy scope must catch buzzword + theater/aphorism');
+
+const ignoredHtml = '<!-- vibe-disable generic-purple-gradient, weak-gray-backdrop, harsh-multi-gradient --><div class="from-purple-600 to-blue-600 bg-gray-800 font-sans">Clean</div>';
+const ignoredLint = lintUI(ignoredHtml);
+assert.strictEqual(ignoredLint.passed, true, 'Inline vibe-disable comment must suppress specified rules');
+console.log('✅ Test 2 Passed: 30-Gate Linter, Scoped Detection, and Inline Ignores verified.');
 
 // Test 3: Auto-Fixer
 console.log('\nTest 3: Verifying Auto-Fixer remediation...');
@@ -40,13 +71,17 @@ assert(!fixRes.fixedContent.includes('bg-gray-800'), 'Fixed content must not hav
 assert(fixRes.fixedContent.includes('bg-zinc-950'), 'Fixed content must have bg-zinc-950');
 console.log('✅ Test 3 Passed: Auto-fixer remediated defects successfully.');
 
-// Test 4: React / TSX Framework Export
-console.log('\nTest 4: Verifying React TSX scaffold export...');
-const reactScaffold = scaffoldLandingPage({ theme: 'luxury_editorial', framework: 'react' });
+// Test 4: HTML & React TSX Scaffold Zero-Slop Self-Verification
+console.log('\nTest 4: Verifying HTML & React TSX scaffolds pass 100% of 30+ Lint Gates...');
+const htmlScaffold = scaffoldLandingPage({ theme: 'luxury_editorial', framework: 'html' });
+assert.strictEqual(htmlScaffold.lint_passed, true, `HTML scaffold failed lint: ${JSON.stringify(htmlScaffold.lint_violations)}`);
+
+const reactScaffold = scaffoldLandingPage({ theme: 'apple_luxury', framework: 'react' });
 assert.strictEqual(reactScaffold.framework, 'react');
+assert.strictEqual(reactScaffold.lint_passed, true, `React scaffold failed lint: ${JSON.stringify(reactScaffold.lint_violations)}`);
 assert(reactScaffold.code.includes("'use client'"), 'React scaffold must include use client directive');
 assert(reactScaffold.code.includes('export default function LandingPage()'), 'React scaffold must export component');
-console.log('✅ Test 4 Passed: React TSX export verified.');
+console.log('✅ Test 4 Passed: Both HTML & React TSX scaffolds pass 100% zero-slop verification.');
 
 // Test 5: Universal Prompt Expander (30+ Domains)
 console.log('\nTest 5: Verifying Universal Prompt Expander with 30+ Domains...');
@@ -55,4 +90,17 @@ assert(expanded.positive_prompt.includes('photorealistic'), 'Must contain optica
 assert(expanded.negative_prompt.includes('plastic skin'), 'Must contain negative slop constraints');
 console.log('✅ Test 5 Passed: Universal Prompt Expander verified.');
 
-console.log('\n🎉 ALL 5 TEST SUITES PASSED (100% Zero Defect).\n');
+// Test 6: 12 Post-Processing Design Commands & PRODUCT.md Generator
+console.log('\nTest 6: Verifying 12 Post-Processing Design Commands & Paired PRODUCT.md...');
+const cmds = listDesignCommands();
+assert.strictEqual(cmds.length, 12, 'Must expose all 12 post-processing design commands');
+const polishCmd = getDesignCommand('polish');
+assert.strictEqual(polishCmd.name, 'polish');
+assert(Array.isArray(polishCmd.checklist) && polishCmd.checklist.length >= 4);
+const productMd = generateProductMD({ name: 'ViecLamRemote' });
+assert(productMd.includes('# PRODUCT.md — ViecLamRemote'), 'Must generate valid PRODUCT.md');
+const designMd = generateDesignMD('apple_luxury');
+assert(designMd.includes('Precision Quiet Luxury Light'), 'Must generate valid DESIGN.md');
+console.log('✅ Test 6 Passed: 12 Design Commands & PRODUCT.md/DESIGN.md context generator verified.');
+
+console.log('\n🎉 ALL 6 TEST SUITES PASSED (100% Zero Defect — v1.6.0 Ready).\n');

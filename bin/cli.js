@@ -1,10 +1,24 @@
 #!/usr/bin/env node
 
 /**
- * VibeDesign-Harness Unified CLI
+ * VibeDesign-Harness Unified CLI (v1.6.0)
  */
 
-import { lintUI, expandPrompt, generateDesignMD, listThemes, listDomains, listComponents, scaffoldLandingPage, fetchRemoteRules, fixUI } from '../index.js';
+import {
+    lintUI,
+    expandPrompt,
+    generateDesignMD,
+    generateProductMD,
+    listThemes,
+    listDomains,
+    listComponents,
+    listLintRules,
+    listDesignCommands,
+    getDesignCommand,
+    scaffoldLandingPage,
+    fetchRemoteRules,
+    fixUI
+} from '../index.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -13,29 +27,34 @@ const command = args[0];
 
 function printHelp() {
     console.log(`
-🎨 VibeDesign-Harness CLI — Deterministic UI/UX Design System Harness
+🎨 VibeDesign-Harness CLI v1.6.0 — Deterministic UI/UX Design System & Anti-Slop Harness
 
 Usage:
   npx vibe-design-harness <command> [options]
 
 Commands:
-  lint <file> [--fix]                  Audit HTML/component for AI-slop violations (with auto-fix support)
+  lint <file> [--fix] [--scope <scope>]  Audit HTML/JSX for 30+ AI-slop rules (scopes: all|color|layout|type|motion|copy|slop)
+  rules [--scope <scope>]                List all 30+ deterministic detector rules
+  command [name]                         Get Impeccable-grade post-processing playbook (audit, critique, polish, distill, bolder, quieter, delight, harden, animate, clarify, adapt, overdrive)
+  init-context [theme] [--name <brand>]  Generate paired PRODUCT.md + DESIGN.md in current directory
   scaffold <theme> [output] [--framework react|html] Assemble studio-grade zero-slop UI (HTML or React TSX)
-  expand <prompt> [domain]            Generate studio-grade camera physics visual prompts
-  design-system <theme> [accent]      Generate DESIGN.md brand tokens for AI agents
-  themes                              List all 12 supported design themes
-  domains                             List all 30+ visual prompt domains
-  components                          List curated Pro component blocks
+  expand <prompt> [domain]               Generate studio-grade camera physics visual prompts
+  design-system <theme> [accent]         Generate DESIGN.md brand tokens for AI agents
+  themes                                 List all 14 supported design themes
+  domains                                List all 30+ visual prompt domains
+  components                             List curated Pro component blocks
 
 Options:
-  --remote                            Fetch latest remote ban rules when linting
-  --fix                               Auto-fix detectable AI-slop defects in file
-  --framework react                   Export as React / TSX Tailwind component
+  --remote                               Fetch latest remote ban rules when linting
+  --fix                                  Auto-fix detectable AI-slop defects in file
+  --scope <scope>                        Filter lint rules by scope (color, layout, type, motion, copy, slop)
+  --framework react                      Export scaffold as React / TSX Tailwind component
 
 Examples:
   npx vibe-design-harness lint src/App.html --fix
+  npx vibe-design-harness command polish
+  npx vibe-design-harness init-context apple_luxury --name "ViecLamRemote"
   npx vibe-design-harness scaffold luxury_editorial page.tsx --framework react
-  npx vibe-design-harness design-system luxury_gold "#d4af37"
 `);
 }
 
@@ -62,8 +81,10 @@ async function main() {
             }
         }
 
+        const scopeIdx = args.indexOf('--scope');
+        const scope = scopeIdx !== -1 ? args[scopeIdx + 1] : 'all';
         const useRemote = args.includes('--remote');
-        let options = {};
+        let options = { scope };
 
         if (useRemote) {
             console.log('🔄 Fetching remote aesthetic rules...');
@@ -74,15 +95,58 @@ async function main() {
         }
 
         const result = lintUI(target, options);
-        console.log(`\n🔍 Linting: ${result.file}`);
+        console.log(`\n🔍 Linting: ${result.file} (scope: ${result.scope})`);
         if (result.passed) {
             console.log('✅ PASSED: Zero AI-slop violations found. Aesthetic grade: Studio-Quality.');
+            if (result.warnings && result.warnings.length > 0) {
+                result.warnings.forEach(w => console.warn(`   ${w}`));
+            }
             process.exit(0);
         } else {
             console.error(`❌ FAILED: Found ${result.violation_count} design anti-pattern violations:`);
             result.errors.forEach(e => console.error(`   ${e}`));
             process.exit(1);
         }
+    }
+
+    if (command === 'rules') {
+        const scopeIdx = args.indexOf('--scope');
+        const scope = scopeIdx !== -1 ? args[scopeIdx + 1] : 'all';
+        console.log(`\n🛡️ Deterministic Anti-Slop Detector Rules (scope: ${scope}):`);
+        console.table(listLintRules(scope));
+        process.exit(0);
+    }
+
+    if (command === 'command' || command === 'commands') {
+        const sub = args[1];
+        if (!sub || sub === 'list') {
+            console.log('\n🎯 Available Post-Processing Design Commands (12 Flows):');
+            console.table(listDesignCommands());
+            process.exit(0);
+        }
+        const playbook = getDesignCommand(sub);
+        console.log(`\n# 🎯 Design Command: /${playbook.name} (${playbook.category.toUpperCase()})`);
+        console.log(`${playbook.summary}\n`);
+        console.log('## Execution Checklist:');
+        playbook.checklist.forEach((item, i) => console.log(`  ${i + 1}. ${item}`));
+        console.log(`\n## Agent Directive:\n  ${playbook.directive}\n`);
+        process.exit(0);
+    }
+
+    if (command === 'init-context') {
+        const theme = (args[1] && !args[1].startsWith('--')) ? args[1] : 'linear';
+        const nameIdx = args.indexOf('--name');
+        const name = nameIdx !== -1 ? args[nameIdx + 1] : 'Project';
+        const designMd = generateDesignMD(theme);
+        const productMd = generateProductMD({ name });
+        const designPath = path.resolve(process.cwd(), 'DESIGN.md');
+        const productPath = path.resolve(process.cwd(), 'PRODUCT.md');
+        fs.writeFileSync(designPath, designMd, 'utf-8');
+        fs.writeFileSync(productPath, productMd, 'utf-8');
+        console.log(`✅ Initialized paired design context:`);
+        console.log(`   - ${productPath}`);
+        console.log(`   - ${designPath} (theme: ${theme})`);
+        process.exit(0);
     }
 
     if (command === 'scaffold') {

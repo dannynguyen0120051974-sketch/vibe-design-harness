@@ -1,13 +1,14 @@
 /**
- * VibeDesign-Harness Main Entry Point
+ * VibeDesign-Harness Main Entry Point (v1.6.0)
  * 100% Pure JavaScript (Zero Python Dependency)
  */
 
-import { checkFile, fixContent, loadLocalConfig } from './harness/ui_linter.js';
+import { checkFile, fixContent, loadLocalConfig, listLintRules, BANNED_PATTERNS, REQUIRED_PATTERNS } from './harness/ui_linter.js';
 import { expandPrompt, registerDomain, listDomains, VISUAL_DOMAINS } from './harness/prompt_expander.js';
 import { generateDesignMD, getTheme, registerTheme, listThemes, THEMES } from './harness/claude_design_engine.js';
 import { getComponent, listComponents, PRO_COMPONENTS } from './harness/components.js';
 import { scaffoldLandingPage } from './harness/landing_assembler.js';
+import { CRAFT_FLOOR, DESIGN_COMMANDS, listDesignCommands, getDesignCommand, generateProductMD } from './harness/design_commands.js';
 
 export function lintUI(filePathOrContent, options = {}) {
     return checkFile(filePathOrContent, options);
@@ -43,7 +44,15 @@ export {
     listComponents,
     PRO_COMPONENTS,
     scaffoldLandingPage,
-    loadLocalConfig
+    loadLocalConfig,
+    listLintRules,
+    BANNED_PATTERNS,
+    REQUIRED_PATTERNS,
+    CRAFT_FLOOR,
+    DESIGN_COMMANDS,
+    listDesignCommands,
+    getDesignCommand,
+    generateProductMD
 };
 
 export default {
@@ -60,5 +69,11 @@ export default {
     listComponents,
     scaffoldLandingPage,
     fetchRemoteRules,
-    loadLocalConfig
+    loadLocalConfig,
+    listLintRules,
+    CRAFT_FLOOR,
+    DESIGN_COMMANDS,
+    listDesignCommands,
+    getDesignCommand,
+    generateProductMD
 };

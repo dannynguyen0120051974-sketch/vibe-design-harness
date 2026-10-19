@@ -97,9 +97,9 @@ export const THEMES = {
         surface: "#ffffff",
         border: "#e5e5ea",
         textMain: "#1d1d1f",
-        textMuted: "#86868b",
-        accent: "#0071e3",
-        font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Plus Jakarta Sans', sans-serif",
+        textMuted: "#515154",
+        accent: "#0066cc",
+        font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Bricolage Grotesque', sans-serif",
         radius: "12px",
         shadow: "0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.04)",
         mode: "light"
@@ -110,9 +110,9 @@ export const THEMES = {
         surface: "#ffffff",
         border: "#e4e4e7",
         textMain: "#09090b",
-        textMuted: "#71717a",
+        textMuted: "#52525b",
         accent: "#18181b",
-        font: "Geist, 'Plus Jakarta Sans', sans-serif",
+        font: "'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif",
         radius: "8px",
         shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03)",
         mode: "light"
@@ -196,7 +196,7 @@ export const THEMES = {
         textMain: "#000000",
         textMuted: "#333333",
         accent: "#ff007f",
-        font: "Space Grotesk, Syne, sans-serif",
+        font: "Plus Jakarta Sans, Oswald, sans-serif",
         radius: "0px",
         shadow: "4px 4px 0px #000000",
         mode: "light"

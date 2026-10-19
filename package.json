@@ -1,7 +1,7 @@
 {
   "name": "vibe-design-harness",
-  "version": "1.5.2",
-  "description": "Deterministic Anti-Slop UI/UX Linter (<1ms), Precision Design Token Engine & Multi-Domain Visual Prompt Harness for AI Coding Agents.",
+  "version": "1.6.0",
+  "description": "Deterministic 30-Gate Anti-Slop UI/UX Linter (<1ms), 12 Post-Processing Design Commands, Precision Token Engine & Multi-Domain Visual Prompt Harness for AI Coding Agents.",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -14,6 +14,8 @@
   "scripts": {
     "test": "node tests/test.js",
     "lint": "node bin/cli.js lint",
+    "rules": "node bin/cli.js rules",
+    "command": "node bin/cli.js command",
     "expand": "node bin/cli.js expand",
     "themes": "node bin/cli.js themes",
     "domains": "node bin/cli.js domains"
