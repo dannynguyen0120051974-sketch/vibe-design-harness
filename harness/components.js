@@ -1,5 +1,5 @@
 /**
- * VibeDesign-Harness Curated Pro Component Catalog (v1.6.0 — Impeccable Craft Floor Compliant)
+ * VibeDesign-Harness Curated Pro Component Catalog (v1.6.0 — AGS Studio Craft Floor Compliant)
  * 100% Pure Vanilla JS + Modern Tailwind CSS
  * Pre-tested, theme-aware, zero-slop components (passes all 30+ deterministic lint gates).
  */

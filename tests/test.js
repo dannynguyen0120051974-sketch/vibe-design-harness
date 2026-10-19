@@ -7,6 +7,13 @@ import {
     sanitizeImagePrompt,
     inferStudioAspectRatio,
     CAPCUT_VN_TYPOGRAPHY_PRESETS,
+    checkVietnameseFontSupport,
+    toMidjourneyFormat,
+    toOpenAIFormat,
+    toFluxFormat,
+    toNanoBananaFormat,
+    toSeedanceFormat,
+    exportTypographyAsset,
     generateDesignMD,
     generateProductMD,
     getTheme,
@@ -46,19 +53,19 @@ const hallmarkLint = lintUI(hallmarkSlop);
 assert.strictEqual(hallmarkLint.passed, false, 'Hallmark slop must fail lint check');
 assert(hallmarkLint.violation_count >= 2, 'Must detect Syne font and pill button');
 
-// Test 2c: Impeccable + Taste gates (pulsing dot, side-tab border, aphoristic cadence, italic serif H1)
-const impeccableTasteSlop = `
+// Test 2c: AGS Studio + Taste gates (pulsing dot, side-tab border, aphoristic cadence, italic serif H1)
+const agsTasteSlop = `
 <div class="animate-bounce rounded-xl border-l-4">
   <span class="w-2 h-2 rounded-full animate-pulse"></span>
   <h1 class="font-serif italic bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-500">Unleash your potential</h1>
   <p class="text-justify">Not a tool. A platform. Stop security theater.</p>
 </div>`;
-const it2cLint = lintUI(impeccableTasteSlop);
-assert.strictEqual(it2cLint.passed, false, 'Impeccable+Taste slop must fail lint check');
+const it2cLint = lintUI(agsTasteSlop);
+assert.strictEqual(it2cLint.passed, false, 'AGS Studio+Taste slop must fail lint check');
 assert(it2cLint.violation_count >= 7, `Must detect >=7 violations, got ${it2cLint.violation_count}`);
 
 // Test 2d: Scoped detection & inline ignore support
-const copyOnlyLint = lintUI(impeccableTasteSlop, { scope: 'copy' });
+const copyOnlyLint = lintUI(agsTasteSlop, { scope: 'copy' });
 assert.strictEqual(copyOnlyLint.passed, false);
 assert(copyOnlyLint.violation_count >= 2, 'Copy scope must catch buzzword + theater/aphorism');
 
@@ -118,5 +125,36 @@ assert(productMd.includes('# PRODUCT.md — ViecLamRemote'), 'Must generate vali
 const designMd = generateDesignMD('apple_luxury');
 assert(designMd.includes('Precision Quiet Luxury Light'), 'Must generate valid DESIGN.md');
 console.log('✅ Test 6 Passed: 12 Design Commands & PRODUCT.md/DESIGN.md context generator verified.');
+
+// Test 7: Platform Adapters, Vietnamese Font Glyph/Blacklist Checker & CapCut SVG/JSON Asset Exporter
+console.log('\nTest 7: Verifying 5 Platform Adapters, Vietnamese Font Checker & CapCut Asset Exporter...');
+const mj = toMidjourneyFormat('Poster dọc du lịch đảo Phú Quý hoàng hôn, chữ: "Khám Phá Phú Quý"');
+assert(mj.command.includes('--ar 9:16') && mj.command.includes('--v 7') && mj.command.includes('--no '), 'Midjourney adapter must format --ar 9:16 --v 7 --no');
+const oai = toOpenAIFormat('Poster dọc du lịch đảo Phú Quý');
+assert.strictEqual(oai.payload.size, '1024x1536', 'OpenAI GPT-Image-2 adapter must map 9:16 to 1024x1536');
+const flux = toFluxFormat('Studio ceramic coffee cup');
+assert(flux.payload.negative_prompt.length > 10, 'FLUX adapter must provide dedicated negative_prompt field');
+const nb = toNanoBananaFormat('Banner ngang MacBook Pro');
+assert.strictEqual(nb.payload.generationConfig.imageConfig.aspectRatio, '16:9', 'Nano Banana adapter must lock imageConfig.aspectRatio');
+const sd = toSeedanceFormat('Hero product video frame', { referenceCount: 2 });
+assert(sd.prompt.includes('@Image 1'), 'Seedance 2.5 adapter must bind @Image 1 reference');
+
+const badFont = checkVietnameseFontSupport('Impact');
+assert.strictEqual(badFont.supported, false, 'Impact must be flagged as unsupported/blacklisted for Vietnamese diacritics');
+assert.strictEqual(badFont.blacklisted, true);
+assert(badFont.recommended_replacement.includes('DelaGothic'), 'Impact must map to DelaGothic-Bold');
+
+const goodFont = checkVietnameseFontSupport('Be Vietnam Pro');
+assert.strictEqual(goodFont.supported, true, 'Be Vietnam Pro must pass Vietnamese glyph verification');
+
+const asset = exportTypographyAsset({
+    preset: 'bold_impact',
+    title: 'Kỷ Nguyên Doanh Nghiệp 1 Người',
+    subtitle: 'Tự động hóa vận hành cùng AGS Studio',
+    badge: 'AGS 2026'
+});
+assert(asset.svg.includes('<svg') && asset.svg.includes('Kỷ Nguyên Doanh Nghiệp 1 Người'), 'Must generate valid transparent SVG with Vietnamese headline');
+assert.strictEqual(asset.json.schema, 'ags.capcut.typography.v2', 'Must generate CapCut/Figma JSON v2 schema');
+console.log('✅ Test 7 Passed: Platform Adapters, Vietnamese Font Checker & CapCut SVG/JSON Exporter verified.');
 
 console.log('\n🎉 ALL 6 TEST SUITES PASSED (100% Zero Defect — v1.6.0 Ready).\n');

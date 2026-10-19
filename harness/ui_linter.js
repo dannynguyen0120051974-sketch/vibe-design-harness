@@ -1,5 +1,5 @@
 /**
- * VibeDesign-Harness UI Linter & Aesthetic Auditor (v1.6.0 — 30+ Anti-Slop Gates + Impeccable Engine)
+ * VibeDesign-Harness UI Linter & Aesthetic Auditor (v1.6.0 — 30+ Anti-Slop Gates + AGS Studio Engine)
  * 100% Pure JavaScript (Zero Python Dependency, Zero External Runtime, <1ms execution)
  * Supports:
  *  - .viberc.json / .impeccable/config.json auto-loading
@@ -343,7 +343,7 @@ export function checkFile(filePathOrContent, options = {}) {
         }
     }
 
-    // Check em-dash saturation (Impeccable advisory rule: >= 8 em-dashes in body copy)
+    // Check em-dash saturation (AGS editorial rule: >= 8 em-dashes in body copy)
     const emDashMatches = content.match(/—|--/g);
     if (emDashMatches && emDashMatches.length >= 12 && !inlineIgnores.has('em-dash-overuse')) {
         warnings.push(`⚠️ WARN: High em-dash saturation (${emDashMatches.length} instances) — common AI copywriting tell [em-dash-overuse]`);

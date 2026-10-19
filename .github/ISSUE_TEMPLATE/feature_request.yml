@@ -14,6 +14,6 @@ body:
     id: target-agents
     attributes:
       label: Target Coding Agents
-      description: Gemini 3.7, Codex CLI, Claude Code, OpenClaw, Hermes Agent, etc.
+      description: Gemini 3.7, Codex CLI, Claude Code, AGS Agent, Hermes Agent, etc.
     validations:
       required: true

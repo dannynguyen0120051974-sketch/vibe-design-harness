@@ -41,7 +41,7 @@
   },
   "youtube_ab_testing_thumbnails": {
     "variant_a_exaggerated_expression": {
-      "style": "MrBeast High CTR Cutout",
+      "style": "AGS High-CTR Split Cutout",
       "prompt": "Exaggerated shocked face reaction cutout on left side with bright cyan outline, holding giant $100,000 cash stack, ultra-vibrant yellow background with directional motion blur, 16:9 YouTube thumbnail ratio.",
       "negative_prompt": "dull lighting, low contrast, dark background, small subject"
     },

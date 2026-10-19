@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * VibeDesign-Harness Unified CLI (v1.6.0)
+ * AGS Design & Visual Studio Harness Unified CLI (v1.6.0)
  */
 
 import {
@@ -17,7 +17,11 @@ import {
     getDesignCommand,
     scaffoldLandingPage,
     fetchRemoteRules,
-    fixUI
+    fixUI,
+    checkVietnameseFontSupport,
+    formatForPlatform,
+    exportTypographyAsset,
+    CAPCUT_VN_TYPOGRAPHY_PRESETS
 } from '../index.js';
 import fs from 'fs';
 import path from 'path';
@@ -27,7 +31,7 @@ const command = args[0];
 
 function printHelp() {
     console.log(`
-🎨 VibeDesign-Harness CLI v1.6.0 — Deterministic UI/UX Design System & Anti-Slop Harness
+🎨 AGS Design & Visual Studio Harness CLI v1.6.0 — Deterministic UI/UX Design System & Anti-Slop Harness
 
 Usage:
   npx vibe-design-harness <command> [options]
@@ -35,7 +39,7 @@ Usage:
 Commands:
   lint <file> [--fix] [--scope <scope>]  Audit HTML/JSX for 30+ AI-slop rules (scopes: all|color|layout|type|motion|copy|slop)
   rules [--scope <scope>]                List all 30+ deterministic detector rules
-  command [name]                         Get Impeccable-grade post-processing playbook (audit, critique, polish, distill, bolder, quieter, delight, harden, animate, clarify, adapt, overdrive)
+  command [name]                         Get AGS Studio-grade post-processing playbook (audit, critique, polish, distill, bolder, quieter, delight, harden, animate, clarify, adapt, overdrive)
   init-context [theme] [--name <brand>]  Generate paired PRODUCT.md + DESIGN.md in current directory
   scaffold <theme> [output] [--framework react|html] Assemble studio-grade zero-slop UI (HTML or React TSX)
   expand <prompt> [domain]               Generate studio-grade camera physics visual prompts
@@ -200,6 +204,39 @@ async function main() {
     if (command === 'domains') {
         console.log('\n📸 Supported Visual Prompt Domains (30+ Domains):');
         console.table(listDomains());
+        process.exit(0);
+    }
+
+    if (command === 'export-typography') {
+        const presetIdx = args.indexOf('--preset');
+        const preset = presetIdx !== -1 ? args[presetIdx + 1] : (args[1] && !args[1].startsWith('--') ? args[1] : 'editorial_luxury');
+        const titleIdx = args.indexOf('--title');
+        const title = titleIdx !== -1 ? args[titleIdx + 1] : 'Hệ Thống AI Agent Tự Động Hóa';
+        const subIdx = args.indexOf('--subtitle');
+        const subtitle = subIdx !== -1 ? args[subIdx + 1] : 'Chuẩn hóa thiết kế & vận hành 24/7 cho doanh nghiệp';
+        const badgeIdx = args.indexOf('--badge');
+        const badge = badgeIdx !== -1 ? args[badgeIdx + 1] : 'AGS STUDIO';
+        const outIdx = args.indexOf('--out');
+        const outputDir = outIdx !== -1 ? args[outIdx + 1] : process.cwd();
+        const exported = exportTypographyAsset({ preset, title, subtitle, badge, outputDir });
+        console.log(`\n✨ Exported CapCut / Figma Vietnamese Typography Asset (preset: ${exported.preset})`);
+        console.log(`   SVG Overlay : ${exported.svg_path}`);
+        console.log(`   JSON Config : ${exported.json_path}`);
+        process.exit(0);
+    }
+
+    if (command === 'check-font') {
+        const fontName = args.slice(1).join(' ') || 'Be Vietnam Pro';
+        console.log('\n🔤 Vietnamese Font Support Check (U+0102–U+1EF9):');
+        console.log(JSON.stringify(checkVietnameseFontSupport(fontName), null, 2));
+        process.exit(0);
+    }
+
+    if (command === 'format') {
+        const promptText = args[1] || '';
+        const platIdx = args.indexOf('--platform');
+        const platform = platIdx !== -1 ? args[platIdx + 1] : 'nano_banana_pro';
+        console.log(JSON.stringify(formatForPlatform(promptText, platform), null, 2));
         process.exit(0);
     }
 
