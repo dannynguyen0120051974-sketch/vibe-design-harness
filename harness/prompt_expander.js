@@ -119,6 +119,42 @@ export const VISUAL_DOMAINS = {
     "dropship_product": {
         "prefix": "Amazon & Shopify product photography mockup, isolated white studio lighting, crisp product highlights, commercial DTC product showcase, clean drop shadow physics, high CTR visual appeal.",
         "negative": "blurry reflection, dark muddy shadows, chaotic background clutter, distorted product geometry"
+    },
+    // 6. 2026 FLAGSHIP STUDIO ENGINES (Nano Banana Pro, GPT-Image-2, Seedance 2.5, Midjourney V7, CapCut VN)
+    "nano_banana_pro": {
+        "name": "Nano Banana Pro / Gemini 3.1 Flash Image Studio",
+        "category": "Flagship 2026",
+        "lens": "Fujifilm GFX 100S 85mm f/4 Macro",
+        "prefix": "Studio-directed commercial visual on Fujifilm GFX 100S medium format, 85mm f/4 macro lens, diffused north-facing window softbox from camera left, warm bounce fill from right, realistic contact shadows, authentic surface micro-texture, natural editorial color science, 15% unobstructed safe margin on all edges.",
+        "negative": "plastic CGI sheen, printed CSS font names or pt/px sizes, numbered item labels (#1, #2), unquoted gibberish Vietnamese micro-text, clipped device bezels"
+    },
+    "gpt_image_2": {
+        "name": "OpenAI ChatGPT Image 2 / 1.5 Production",
+        "category": "Flagship 2026",
+        "lens": "Leica M11 50mm f/1.4 Summilux",
+        "prefix": "Candid unposed photorealistic studio capture, 35mm film optics on 50mm lens, honest material textures, natural skin pores, structured typographic hierarchy, high-contrast verbatim lettering, balanced negative space.",
+        "negative": "heavy retouching, plastic skin, unrequested extra words, warped packaging, watermark, fake logos"
+    },
+    "seedance_2_5": {
+        "name": "ByteDance Seedance 2.5 / Seedream 5.0 Director",
+        "category": "Flagship 2026",
+        "lens": "Arri Alexa Mini LF 35mm Anamorphic",
+        "prefix": "Director-structured visual storytelling frame, macro-to-micro spatial staging (foreground, midground, background), smooth optical depth of field, natural atmospheric lighting, explicit @Image reference identity lock.",
+        "negative": "unrequested subtitles, chaotic multi-subject collision, over-filled shot clutter, distorted hands"
+    },
+    "midjourney_v7": {
+        "name": "Midjourney V7 Optical Photorealism",
+        "category": "Flagship 2026",
+        "lens": "Hasselblad X2D 100C 80mm f/2.8",
+        "prefix": "Hasselblad X2D 100C medium format photography, Kodak Portra 400 natural color science, subsurface skin scattering, tactile fabric weave, directional golden-hour or soft overcast lighting with natural shadow falloff.",
+        "negative": "AI-slop neon gradients, plastic skin smoothing, generic CGI render, oversaturated contrast"
+    },
+    "capcut_vn_poster": {
+        "name": "CapCut Vietnamese Typography & Editorial Poster",
+        "category": "Flagship 2026",
+        "lens": "Editorial Studio Flat-Lay 50mm",
+        "prefix": "Editorial poster layout with generous negative space for CapCut Vietnamese display typography (CapCut Sans Text Bold / Playfair Display Bold / DelaGothic Bold), high-contrast focal subject, clean background separation, 1.35 line-height diacritic clearance.",
+        "negative": "crowded tiny Vietnamese body text (<14pt), colliding diacritics, busy background behind text zone, printed #HEX codes"
     }
 };
 
@@ -127,8 +163,13 @@ export const ALIASES = {
     "infographic_diagram": "infographic",
     "social_carousel": "carousel_ad",
     "typography": "typography_poster",
-    "gemini_imagen": "universal_image_pro",
-    "gemini_imagen_pro": "universal_image_pro",
+    "gemini_imagen": "nano_banana_pro",
+    "gemini_imagen_pro": "nano_banana_pro",
+    "gemini_image": "nano_banana_pro",
+    "nano_banana": "nano_banana_pro",
+    "gpt_image": "gpt_image_2",
+    "seedream": "seedance_2_5",
+    "capcut": "capcut_vn_poster",
     "imagen": "universal_image_pro",
     "midjourney": "universal_image_pro",
     "flux": "universal_image_pro",
@@ -165,6 +206,159 @@ export function registerDomain(domainKey, prefix, negative = '') {
  * @param {string} domain Visual domain style or target model
  * @param {Object} options Custom options (lighting, composition, mood, customPrefix, customNegative)
  */
+
+export const CAPCUT_VN_TYPOGRAPHY_PRESETS = {
+    editorial_luxury: {
+        name: "Editorial Luxury (CapCut / Vogue)",
+        headline_font: "PlayfairDisplay-Bold.ttf",
+        body_font: "CapCutSansText-Medium.otf",
+        line_height: 1.35,
+        treatment: "Frosted dark scrim + crisp drop shadow + emerald pill badge"
+    },
+    modern_clean: {
+        name: "Modern Clean UI & Caption",
+        headline_font: "CapCutSansText-Bold.otf",
+        body_font: "CapCutSansText-Regular.otf",
+        line_height: 1.32,
+        treatment: "High-contrast geometric sans with wide Vietnamese diacritic clearance"
+    },
+    bold_impact: {
+        name: "Bold Impact Poster (DelaGothic)",
+        headline_font: "DelaGothic-Bold.ttf",
+        body_font: "Montserrat-Bold.otf",
+        line_height: 1.30,
+        treatment: "Heavy display block headline + two-tone keyword highlight"
+    },
+    kinetic_hype: {
+        name: "Kinetic Hype & Sports/Business",
+        headline_font: "BarlowCondensed-BlackItalic.ttf",
+        body_font: "CapCutSansText-Bold.otf",
+        line_height: 1.28,
+        treatment: "Condensed italic punch + crisp dark stroke"
+    },
+    viral_thumbnail: {
+        name: "Viral YouTube / Reels Thumbnail",
+        headline_font: "Bangers-Regular.ttf",
+        body_font: "Montserrat-Bold.otf",
+        line_height: 1.30,
+        treatment: "High-CTR cutout zone + bold outlined title"
+    },
+    vn_creative: {
+        name: "CapCut ZYVNA Creative Vietnamese",
+        headline_font: "ZYVNA_Dreamboat.ttf",
+        body_font: "CapCutSansText-Medium.otf",
+        line_height: 1.36,
+        treatment: "Custom ByteDance ZYVNA Vietnamese display glyphs"
+    },
+    classic_serif: {
+        name: "Archival Book & Authority Serif",
+        headline_font: "Vollkorn-Blk.ttf",
+        body_font: "Vollkorn-Md.ttf",
+        line_height: 1.35,
+        treatment: "Warm paper grain + deep charcoal ink"
+    },
+    tech_cyber: {
+        name: "Tech & AI Systems Geometric",
+        headline_font: "ChakraPetch-Regular.ttf",
+        body_font: "CapCutSansText-Medium.otf",
+        line_height: 1.32,
+        treatment: "Precision technical grid + emerald signal accent"
+    }
+};
+
+const HEX_COLOR_DESCRIPTIONS = {
+    "#fbfbfd": "warm alabaster off-white",
+    "#f4f4ef": "warm editorial cotton paper cream",
+    "#f7f4ee": "classic archival book paper cream",
+    "#ffffff": "crisp neutral studio white",
+    "#0b5e55": "deep emerald teal",
+    "#1f6f3d": "deep forest signal green",
+    "#10b981": "vibrant emerald green",
+    "#14b8a6": "rich mineral teal",
+    "#0e1116": "deep matte obsidian ink",
+    "#09090b": "deep matte zinc black"
+};
+
+const VN_DIACRITIC_RE = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ]/;
+
+export function inferStudioAspectRatio(prompt = "", requestedAspect = "") {
+    const raw = String(requestedAspect || "").trim().toLowerCase();
+    const p = String(prompt || "").toLowerCase();
+    if (!raw || raw === "square" || raw === "1:1") {
+        if (/\b(9:16|iphone|mobile\s+ui|mobile\s+app|smartphone\s+screen|story|reel|tiktok|vertical\s+mockup)\b/.test(p)) {
+            return "9:16";
+        }
+        if (/\b(16:9|studio\s+display|macbook|desktop\s+ui|widescreen|youtube\s+thumbnail|hero\s+banner|cover\s+banner|pitch\s+deck)\b/.test(p)) {
+            return "16:9";
+        }
+        if (/\b(4:5|facebook\s+post|instagram\s+post|social\s+card|carousel\s+slide)\b/.test(p)) {
+            return "4:5";
+        }
+    }
+    const map = {
+        square: "1:1", "1:1": "1:1",
+        landscape: "16:9", "16:9": "16:9", widescreen: "16:9",
+        portrait: "9:16", "9:16": "9:16", vertical: "9:16",
+        social: "4:5", "4:5": "4:5", feed: "4:5",
+        card: "3:4", "3:4": "3:4", "4:3": "4:3", "21:9": "21:9"
+    };
+    return map[raw] || "16:9";
+}
+
+export function sanitizeImagePrompt(prompt = "") {
+    let cleaned = String(prompt || "");
+    for (const [hex, desc] of Object.entries(HEX_COLOR_DESCRIPTIONS)) {
+        cleaned = cleaned.replace(new RegExp(hex, "gi"), desc);
+    }
+    cleaned = cleaned.replace(/\(\s*#[0-9a-fA-F]{3,8}\s*\)/g, "");
+    cleaned = cleaned.replace(/#[0-9a-fA-F]{6}\b/g, "natural brand accent tone");
+    const ordinals = { "1": "First element", "2": "Second element", "3": "Third element", "4": "Fourth element", "5": "Fifth element", "6": "Sixth element" };
+    cleaned = cleaned.replace(/(?:^|(?<=\s)|(?<=: ))#?([1-6])\)\s+/g, (_, n) => `${ordinals[n] || "Item " + n}: `);
+    cleaned = cleaned.replace(/\(\s*(?:SF\s*Pro|Inter|Roboto|Helvetica|Arial|Plus\s*Jakarta\s*Sans|Font)[^)]{0,40}\b\d+\s*(?:pt|px)\s*\)/gi, "");
+    cleaned = cleaned.replace(/\b(?:SF\s*Pro\s*(?:Bold|Medium|Regular|Display)?\s*,?\s*)?\b\d+\s*(?:pt|px)\b/gi, "");
+    cleaned = cleaned.replace(/\b(?:8k|4k|16k)\s*(?:render|resolution|uhd|quality)?\b/gi, "");
+    cleaned = cleaned.replace(/\b(?:dribbble|behance)\s*(?:and\s*(?:dribbble|behance))?\s*(?:top\s*)?(?:award[- ]winning)?\s*(?:web\s*design\s*showcase|showcase)?\b/gi, "editorial commercial design");
+    cleaned = cleaned.replace(/\b(?:ultra[- ]clean|hyper[- ]detailed|hyper[- ]realistic|masterpiece|stunning|breathtaking)\b/gi, "");
+    return cleaned.replace(/\s{2,}/g, " ").replace(/,\s*,/g, ",").trim();
+}
+
+export function compileStudioImagePrompt(prompt = "", options = {}) {
+    if (!prompt || String(prompt).includes("[STUDIO IMAGE BRIEF")) return String(prompt || "");
+    const ratio = inferStudioAspectRatio(prompt, options.aspectRatio);
+    const cleaned = sanitizeImagePrompt(prompt);
+    const hasVn = VN_DIACRITIC_RE.test(prompt);
+    const quoted = [];
+    const quoteRe = /(?:"([^"\n]{1,65})"|'([^'\n]{1,65})')/g;
+    let m;
+    while ((m = quoteRe.exec(prompt)) !== null) {
+        const val = (m[1] || m[2] || "").trim();
+        if (val && !/^(?:https?:\/\/|[a-z0-9.-]+\.[a-z]{2,}|#[0-9a-fA-F]{3,8}|SF Pro.*|\d+pt|\d+px)$/i.test(val) && !quoted.includes(val)) {
+            quoted.push(val);
+        }
+    }
+    const blocks = [
+        `[STUDIO IMAGE BRIEF — CANVAS ${ratio}]`,
+        ...(options.referenceCount > 0 ? [
+            `[ASSET REFERENCING & EDIT LOCK]: Bind @Image 1 (of ${options.referenceCount}) as the primary visual anchor. Lock core identity, geometry, and proportions first; apply only the requested change.`
+        ] : []),
+        `[SUBJECT & SCENE]: ${cleaned}`,
+        `[COMPOSITION & FRAMING]: Canvas aspect ratio ${ratio}. Center primary subject with at least 15% unobstructed breathing margin on all four edges so nothing is clipped or shifted.`,
+        `[CAMERA, OPTICS & COLOR SCIENCE]: Shot on Fujifilm GFX 100S medium format, 85mm f/4 macro lens, diffused north-facing window softbox from camera left, warm bounce fill from right, realistic contact shadows, true-to-life editorial color science.`
+    ];
+    if (quoted.length > 0) {
+        const qList = quoted.slice(0, 5).map(t => `"${t}"`).join(", ");
+        blocks.push(
+            hasVn
+                ? `[TEXT — RENDER VERBATIM (CAPCUT VIETNAMESE TYPOGRAPHY STANDARD)]: Render ONLY these exact quoted strings: ${qList}. Set in bold high-contrast geometric sans-serif (CapCut Sans Text Bold / Plus Jakarta Sans Bold style) with wide letter-spacing, generous 1.35 line-height, and razor-sharp Vietnamese diacritics. CRITICAL VIETNAMESE TEXT GUARD: Do NOT invent or render ANY unquoted Vietnamese subtext, small body paragraphs, or micro-labels (<14pt); represent secondary UI/card text as clean abstract skeleton bars.`
+                : `[TEXT — RENDER VERBATIM]: Render ONLY these exact quoted strings: ${qList} in crisp high-contrast editorial typography. Do NOT invent unrequested micro-copy.`
+        );
+    } else {
+        blocks.push("[TEXT CONSTRAINT]: Do NOT render any text, letters, numbers, labels, watermarks, or logos anywhere in the image.");
+    }
+    blocks.push("[STRICT CONSTRAINTS]: No printed font names or pt/px sizes, no numbered labels (#1, #2), no clipped device edges, no plastic CGI sheen.");
+    return blocks.join("\n");
+}
+
 export function expandPrompt(prompt, domain = 'photorealism', options = {}) {
     let domKey = (domain || 'photorealism').toLowerCase().trim();
     if (ALIASES[domKey]) {
@@ -183,15 +377,20 @@ export function expandPrompt(prompt, domain = 'photorealism', options = {}) {
 
     const expandedPrompt = `${prefix} ${prompt}${customModifier}. High quality, master art direction.`;
 
+    const inferredRatio = inferStudioAspectRatio(prompt, options.aspectRatio);
+    const studioBrief = compileStudioImagePrompt(prompt, { aspectRatio: inferredRatio, referenceCount: options.referenceCount || 0 });
     return {
         original_prompt: prompt,
+        sanitized_prompt: sanitizeImagePrompt(prompt),
         domain: domKey,
         domain_name: spec.name,
         expanded_prompt: expandedPrompt,
         positive_prompt: expandedPrompt,
+        studio_brief: studioBrief,
         negative_prompt: negative,
+        capcut_vn_preset: CAPCUT_VN_TYPOGRAPHY_PRESETS[options.capcutPreset || 'modern_clean'],
         recommended_parameters: {
-            aspect_ratio: options.aspectRatio || '16:9',
+            aspect_ratio: inferredRatio,
             sampler: 'euler_a / flow_match',
             guidance_scale: 3.5,
             negative_prompt: negative
@@ -220,6 +419,10 @@ export function listDomains() {
 
 export default {
     expandPrompt,
+    compileStudioImagePrompt,
+    sanitizeImagePrompt,
+    inferStudioAspectRatio,
+    CAPCUT_VN_TYPOGRAPHY_PRESETS,
     registerDomain,
     listDomains,
     VISUAL_DOMAINS,

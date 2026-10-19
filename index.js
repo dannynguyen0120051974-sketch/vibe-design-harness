@@ -4,7 +4,7 @@
  */
 
 import { checkFile, fixContent, loadLocalConfig, listLintRules, BANNED_PATTERNS, REQUIRED_PATTERNS } from './harness/ui_linter.js';
-import { expandPrompt, registerDomain, listDomains, VISUAL_DOMAINS } from './harness/prompt_expander.js';
+import { expandPrompt, compileStudioImagePrompt, sanitizeImagePrompt, inferStudioAspectRatio, CAPCUT_VN_TYPOGRAPHY_PRESETS, registerDomain, listDomains, VISUAL_DOMAINS } from './harness/prompt_expander.js';
 import { generateDesignMD, getTheme, registerTheme, listThemes, THEMES } from './harness/claude_design_engine.js';
 import { getComponent, listComponents, PRO_COMPONENTS } from './harness/components.js';
 import { scaffoldLandingPage } from './harness/landing_assembler.js';
@@ -32,6 +32,10 @@ export async function fetchRemoteRules() {
 
 export {
     expandPrompt,
+    compileStudioImagePrompt,
+    sanitizeImagePrompt,
+    inferStudioAspectRatio,
+    CAPCUT_VN_TYPOGRAPHY_PRESETS,
     registerDomain,
     listDomains,
     VISUAL_DOMAINS,
@@ -59,6 +63,10 @@ export default {
     lintUI,
     fixUI,
     expandPrompt,
+    compileStudioImagePrompt,
+    sanitizeImagePrompt,
+    inferStudioAspectRatio,
+    CAPCUT_VN_TYPOGRAPHY_PRESETS,
     registerDomain,
     listDomains,
     generateDesignMD,

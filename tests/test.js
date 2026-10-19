@@ -3,6 +3,10 @@ import {
     lintUI,
     fixUI,
     expandPrompt,
+    compileStudioImagePrompt,
+    sanitizeImagePrompt,
+    inferStudioAspectRatio,
+    CAPCUT_VN_TYPOGRAPHY_PRESETS,
     generateDesignMD,
     generateProductMD,
     getTheme,
@@ -89,6 +93,18 @@ const expanded = expandPrompt('luxury perfume bottle on obsidian rock', 'photore
 assert(expanded.positive_prompt.includes('photorealistic'), 'Must contain optical photorealism tokens');
 assert(expanded.negative_prompt.includes('plastic skin'), 'Must contain negative slop constraints');
 console.log('✅ Test 5 Passed: Universal Prompt Expander verified.');
+
+// Test 5b: Nano Banana Pro + GPT-Image-2 + Seedance 2.5 + CapCut VN Typography Compiler
+console.log('\nTest 5b: Verifying 2026 Studio Image Brief & CapCut Vietnamese Typography Guard...');
+const dirtyVnPrompt = "Close-up mobile UI mockup on an iPhone 16 Pro ('Ti - Cố vấn Trưởng 60 năm kinh nghiệm') of 'Thuyền Giấy', 1) first card (SF Pro Bold, 34pt), (#FBFBFD), Dribbble and Behance top award-winning showcase, 8k render.";
+const studioBrief = compileStudioImagePrompt(dirtyVnPrompt);
+assert(studioBrief.includes('CANVAS 9:16'), 'Must auto-infer 9:16 portrait aspect ratio from iPhone mobile UI');
+assert(!studioBrief.includes('34pt') && !studioBrief.includes('SF Pro Bold'), 'Must strip CSS font specs that leak onto images');
+assert(!studioBrief.includes('#FBFBFD') && !studioBrief.includes('8k render'), 'Must strip raw HEX codes and AI-slop buzzwords');
+assert(!studioBrief.includes('1)'), 'Must convert numbered list markers so #1/#2 are never printed');
+assert(studioBrief.includes('CRITICAL VIETNAMESE TEXT GUARD'), 'Must inject Vietnamese diacritic & skeleton-bar subtext guard');
+assert(Object.keys(CAPCUT_VN_TYPOGRAPHY_PRESETS).length >= 8, 'Must expose 8 CapCut Vietnamese typography presets');
+console.log('✅ Test 5b Passed: Nano Banana Pro 7-Part Brief & CapCut Vietnamese Typography Guard verified.');
 
 // Test 6: 12 Post-Processing Design Commands & PRODUCT.md Generator
 console.log('\nTest 6: Verifying 12 Post-Processing Design Commands & Paired PRODUCT.md...');
