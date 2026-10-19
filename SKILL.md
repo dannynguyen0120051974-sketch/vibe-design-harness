@@ -32,12 +32,17 @@ Tự động kích hoạt khi người dùng yêu cầu:
 
 ---
 
-## 🎨 Bước 0: Image-First Reference (Khi dựng trang mới từ số 0)
+## 🎨 Bước 0: Image-First & 2026 Studio Image Brief (Nano Banana Pro + GPT-Image-2 + CapCut VN)
 
-- Sinh **1 ảnh riêng biệt (16:9) cho TỪNG section** trước khi code (`node /root/vibe-design-harness/bin/cli.js expand "<concept>" <domain>`).
+- Sinh **1 ảnh riêng biệt (16:9 / 9:16 / 4:5)** cho từng section trước khi code (`node /root/vibe-design-harness/bin/cli.js expand "<concept>" <domain>`).
+- **35+ Domains (bao gồm 5 Domain 2026 Studio mới):** `nano_banana_pro`, `gpt_image_2`, `seedance_2_5`, `midjourney_v7`, `capcut_vn_poster`.
+- **Bộ Biên Dịch 7 Khối & Chốt Chặn Tiếng Việt (`compileStudioImagePrompt` + `sanitizeImagePrompt`):**
+  - Tự động quy đổi mã màu `#HEX` thành mô tả vật liệu/ánh sáng tự nhiên, lọc sạch chú thích kỹ thuật (`SF Pro 34pt`, `#1, #2`, `8k render`, `Dribbble`) làm bẩn ảnh.
+  - **CapCut Vietnamese Typography Guard:** Chỉ cho phép model vẽ đúng cụm tiêu đề đặt trong ngoặc kép `"..."` bằng font đậm thoáng dấu; tự động ép toàn bộ mô tả phụ nhỏ (`<14pt`) thành thanh **skeleton bar** chuẩn Apple UI — chấm dứt 100% lỗi AI tự chế chữ tiếng Việt sai dấu!
+  - Hỗ trợ ghép chữ trực tiếp bằng 38 font `.ttf/.otf` CapCut tiếng Việt (`CAPCUT_VN_TYPOGRAPHY_PRESETS` / `apply_capcut_vn_overlay`).
 - **CẤM dùng bố cục Hero mặc định `left-text / right-image` nhàm chán của AI.** Ưu tiên: `centered architectural focus`, `full-bleed editorial`, `asymmetric Bento`, hoặc `Quiet Luxury Apple style`.
 - Chọn rõ **Visitor Mode** trước khi đặt bút:
-  - **Persuade** (Landing page, Sales page): Конtrast mạnh, nhịp điệu dẫn dắt hành động.
+  - **Persuade** (Landing page, Sales page): Contrast mạnh, nhịp điệu dẫn dắt hành động.
   - **Operate** (Dashboard, App, Admin, Portal): Ổn định, mật độ thông tin rõ, `tabular-nums`.
   - **Read** (Docs, Editorial, Blog): Độ dài dòng `45–75ch`, chữ tối thiểu `16px`.
   - **Experience** (Showcase, Flagship): Chuyển động 60fps tinh tế.

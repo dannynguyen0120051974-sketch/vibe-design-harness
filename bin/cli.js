@@ -176,6 +176,7 @@ async function main() {
         console.log('\n--- 📸 UNIVERSAL IMAGE PROMPT EXPANSION ---');
         console.log(`Domain: ${result.domain_name} (${result.domain})`);
         console.log(`\nPositive Prompt:\n${result.positive_prompt}`);
+        console.log(`\n2026 Studio Brief (Nano Banana Pro / GPT-Image-2 / CapCut VN Guard):\n${result.studio_brief}`);
         console.log(`\nNegative Constraints:\n${result.negative_prompt}`);
         console.log('\n--- 💡 Recommended Parameters ---');
         console.log(JSON.stringify(result.recommended_parameters, null, 2));
