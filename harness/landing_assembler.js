@@ -1,4 +1,4 @@
-import { getTheme } from './claude_design_engine.js';
+import { getTheme } from './ags_design_engine.js';
 import { getComponent } from './components.js';
 import { checkFile } from './ui_linter.js';
 

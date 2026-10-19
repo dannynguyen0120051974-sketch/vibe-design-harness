@@ -1,6 +1,6 @@
 /**
  * VibeDesign-Harness Post-Processing & Design Commands Engine (v1.6.0)
- * Absorbed & synthesized from Impeccable's 23 Design Flows + Craft Floor
+ * Absorbed & synthesized from AGS 12 Post-Processing Design Flows + Craft Floor
  * Provides:
  *  - 12 Post-Processing Commands (audit, critique, polish, distill, bolder, quieter, delight, harden, animate, clarify, adapt, overdrive)
  *  - Dual Context Generator: PRODUCT.md + DESIGN.md
@@ -212,7 +212,7 @@ export function getDesignCommand(commandName) {
 }
 
 /**
- * Generate PRODUCT.md context file (paired with DESIGN.md as popularized by Impeccable)
+ * Generate PRODUCT.md context file (paired with DESIGN.md as popularized by AGS Studio)
  * @param {Object} spec Product context specification
  */
 export function generateProductMD(spec = {}) {

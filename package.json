@@ -1,10 +1,12 @@
 {
   "name": "vibe-design-harness",
-  "version": "1.6.0",
-  "description": "Deterministic 30-Gate Anti-Slop UI/UX Linter (<1ms), 12 Post-Processing Design Commands, Precision Token Engine & Multi-Domain Visual Prompt Harness for AI Coding Agents.",
+  "version": "2.0.0",
+  "description": "AGS Design & Visual Studio Harness v2.0 — 30-Gate Anti-Slop UI Linter (<1ms), 5-Platform Image Prompt Compiler (Nano Banana Pro, GPT-Image-2, Seedance 2.5, Midjourney V7, FLUX), Vietnamese Font Glyph Checker, and CapCut SVG/JSON Asset Exporter.",
   "main": "index.js",
   "type": "module",
   "bin": {
+    "ags-design-harness": "bin/cli.js",
+    "ags-design-harness-mcp": "bin/mcp-server.js",
     "vibe-design-harness": "bin/cli.js",
     "vibe-design-harness-mcp": "bin/mcp-server.js"
   },
@@ -18,30 +20,26 @@
     "command": "node bin/cli.js command",
     "expand": "node bin/cli.js expand",
     "themes": "node bin/cli.js themes",
-    "domains": "node bin/cli.js domains"
+    "domains": "node bin/cli.js domains",
+    "export-typography": "node bin/cli.js export-typography",
+    "check-font": "node bin/cli.js check-font"
   },
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "ai-agent",
+    "ags",
+    "agentsea",
+    "ags-design-harness",
     "design-harness",
-    "ui-harness",
     "ui-linter",
-    "generative-ui",
-    "image-prompt-engine",
-    "prompt-expander",
-    "gemini-3-7",
-    "codex-cli",
-    "claude-code",
-    "hermes-agent",
-    "openclaw",
-    "anti-ai-slop",
-    "playwright-evaluation",
-    "multi-domain-prompting",
-    "aeo",
-    "geo",
-    "agentic-workflow"
+    "nano-banana-pro",
+    "gpt-image-2",
+    "seedance",
+    "midjourney-v7",
+    "capcut-vietnamese-typography",
+    "mcp-server",
+    "anti-ai-slop"
   ],
   "author": "teddiesloco",
   "license": "MIT",

@@ -53,19 +53,19 @@ export const VISUAL_DOMAINS = {
 
     // 3. UI PROTOTYPING & AGENT GRAPHICS
     "codex_ui_clean": {
-        "prefix": "OpenAI Codex & Claude clean UI component spec, production-ready Tailwind CSS v4, accessible WCAG AA contrast, deep dark background slate-950, crisp zinc borders, strict typographic scale, micro-interactions.",
+        "prefix": "AGS Studio clean UI component spec, production-ready Tailwind CSS v4, accessible WCAG AA contrast, deep dark background slate-950, crisp zinc borders, strict typographic scale, micro-interactions.",
         "negative": "purple gradient slop, unstyled button, generic gray backdrop, broken alignment"
     },
     "claude_design_app": {
-        "prefix": "Claude Design UI prototype, clean component-driven React HTML mockup, Tailwind CSS tokens, WCAG accessible contrast, modern dark/light mode toggle, sleek dashboard layout.",
+        "prefix": "AGS Design UI prototype, clean component-driven React HTML mockup, Tailwind CSS tokens, WCAG accessible contrast, modern dark/light mode toggle, sleek dashboard layout.",
         "negative": "AI-slop purple gradients, low contrast text, unstyled raw buttons, clunky wireframes"
     },
     "claude_design_deck": {
-        "prefix": "Claude Design pitch deck slide presentation, 16:9 widescreen layout, Swiss typography, visual data cards, high contrast slide structure, executive summary design.",
+        "prefix": "AGS Design pitch deck slide presentation, 16:9 widescreen layout, Swiss typography, visual data cards, high contrast slide structure, executive summary design.",
         "negative": "wall of text, low contrast backgrounds, messy slide alignment, generic template slop"
     },
     "claude_design_hyperframe": {
-        "prefix": "Claude Design HyperFrames HTML motion graphic, smooth CSS @keyframes animations, SVG vector path motion, staggered entry transitions, high-framerate kinetic typography.",
+        "prefix": "AGS Design HyperFrames HTML motion graphic, smooth CSS @keyframes animations, SVG vector path motion, staggered entry transitions, high-framerate kinetic typography.",
         "negative": "static image, choppy frame rates, unaligned layout shifts, low resolution export"
     },
 
@@ -87,7 +87,7 @@ export const VISUAL_DOMAINS = {
         "negative": "dull muted colors, low contrast background, small unreadable text, cluttered visual noise"
     },
     "mrbeast_ab_thumbnail_variant_a": {
-        "prefix": "High CTR MrBeast style A/B testing YouTube thumbnail, exaggerated face expression cutout, glowing neon stroke outline around subject, saturated cyan and yellow backdrop, extreme foreground element, 16:9 4K render.",
+        "prefix": "High-CTR AGS Viral Studio A/B testing YouTube thumbnail, exaggerated face expression cutout, glowing neon stroke outline around subject, saturated cyan and yellow backdrop, extreme foreground element, 16:9 4K render.",
         "negative": "dull colors, low contrast, blurry face, hidden subject, wall of text, dark gloomy backdrop"
     },
     "mrbeast_ab_thumbnail_variant_b": {
@@ -284,16 +284,20 @@ const VN_DIACRITIC_RE = /[àáảãạăằắẳẵặâầấẩẫậèéẻ�
 export function inferStudioAspectRatio(prompt = "", requestedAspect = "") {
     const raw = String(requestedAspect || "").trim().toLowerCase();
     const p = String(prompt || "").toLowerCase();
-    if (!raw || raw === "square" || raw === "1:1") {
-        if (/\b(9:16|iphone|mobile\s+ui|mobile\s+app|smartphone\s+screen|story|reel|tiktok|vertical\s+mockup)\b/.test(p)) {
-            return "9:16";
-        }
-        if (/\b(16:9|studio\s+display|macbook|desktop\s+ui|widescreen|youtube\s+thumbnail|hero\s+banner|cover\s+banner|pitch\s+deck)\b/.test(p)) {
-            return "16:9";
-        }
-        if (/\b(4:5|facebook\s+post|instagram\s+post|social\s+card|carousel\s+slide)\b/.test(p)) {
-            return "4:5";
-        }
+    if (/(?:4:5|tỷ\s*lệ\s*4:5|bài\s*đăng\s*facebook|bài\s*post\s*facebook|instagram\s*post|social\s*card|carousel\s*slide)/i.test(p)) {
+        return "4:5";
+    }
+    if (/(?:3:4|tỷ\s*lệ\s*3:4|thẻ\s*dọc|bìa\s*sách|ebook\s*cover|tạp\s*chí)/i.test(p)) {
+        return "3:4";
+    }
+    if (/(?:9:16|tỷ\s*lệ\s*9:16|ảnh\s*dọc|khung\s*dọc|poster\s*dọc|banner\s*dọc|chiều\s*dọc|màn\s*hình\s*dọc|iphone|mobile\s+ui|mobile\s+app|smartphone\s+screen|story|stories|reel|reels|tiktok|vertical)/i.test(p)) {
+        return "9:16";
+    }
+    if (/(?:16:9|tỷ\s*lệ\s*16:9|ảnh\s*ngang|khung\s*ngang|banner\s*ngang|ảnh\s*bìa|bìa\s*ngang|cover\s*facebook|youtube\s*thumbnail|thumbnail|studio\s+display|macbook|desktop\s+ui|widescreen|hero\s+banner|pitch\s+deck)/i.test(p)) {
+        return "16:9";
+    }
+    if (/(?:1:1|tỷ\s*lệ\s*1:1|ảnh\s*vuông|khung\s*vuông|avatar|sticker\s*pack)/i.test(p)) {
+        return "1:1";
     }
     const map = {
         square: "1:1", "1:1": "1:1",
@@ -333,6 +337,14 @@ export function compileStudioImagePrompt(prompt = "", options = {}) {
     while ((m = quoteRe.exec(prompt)) !== null) {
         const val = (m[1] || m[2] || "").trim();
         if (val && !/^(?:https?:\/\/|[a-z0-9.-]+\.[a-z]{2,}|#[0-9a-fA-F]{3,8}|SF Pro.*|\d+pt|\d+px)$/i.test(val) && !quoted.includes(val)) {
+            quoted.push(val);
+        }
+    }
+    const vnHeadlineRe = /(?:chữ\s+trên\s+ảnh|dòng\s+chữ\s+trên\s+ảnh|với\s+dòng\s+chữ|kèm\s+dòng\s+chữ|in\s+dòng\s+chữ|ghi\s+chữ|tiêu\s+đề\s+trên\s+ảnh|tiêu\s+đề\s+chính|tiêu\s+đề|headline|chữ)\s*(?:là|:)\s*([^.,;\n"']{2,60})/gi;
+    while ((m = vnHeadlineRe.exec(prompt)) !== null) {
+        let val = (m[1] || "").trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, "");
+        val = val.split(/\s+(?:phong\s+cách|theo\s+phong\s+cách|màu\s+|ở\s+góc|ở\s+giữa|bên\s+trên|bên\s+dưới)\b/i)[0].trim();
+        if (val.length >= 2 && val.length <= 60 && !quoted.includes(val)) {
             quoted.push(val);
         }
     }
